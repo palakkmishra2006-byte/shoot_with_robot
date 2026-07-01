@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { 
+            margin: 0; height: 100vh; background: #222; 
+            overflow: hidden; display: flex; 
+            justify-content: center; align-items: center; 
+        }
+
+        /* Full Body Robot Structure */
+        #robot {
+            display: flex; flex-direction: column;
+            align-items: center; cursor: crosshair;
+            user-select: none; z-index: 10;
+        }
+        .head { font-size: 100px; }
+        .body { font-size: 80px; margin-top: -20px; }
+        .legs { font-size: 50px; margin-top: -20px; }
+
+        /* Bullet & Effects */
+        .bullet {
+            position: absolute; width: 30px; height: 10px;
+            background: yellow; border-radius: 5px;
+            pointer-events: none; transform-origin: left center;
+        }
+        .bang {
+            position: absolute; color: hotpink;
+            font-weight: bold; font-size: 20px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="robot">
+        <div class="head">🤖</div>
+        <div class="body">🔲</div>
+        <div class="legs">🦵🦵</div>
+    </div>
+
+    <script>
+        const robot = document.getElementById('robot');
+
+        document.addEventListener('click', (e) => {
+            const head = document.querySelector('.head');
+            const rect = head.getBoundingClientRect();
+            const startX = rect.left + rect.width / 2;
+            const startY = rect.top + rect.height / 2;
+
+            // 1. Create Bullet
+            const bullet = document.createElement('div');
+            bullet.classList.add('bullet');
+            document.body.appendChild(bullet);
+
+            // 2. Create Bang Text
+            const bang = document.createElement('div');
+            bang.className = 'bang';
+            bang.innerText = 'Bang! ❤️';
+            bang.style.left = startX + 'px';
+            bang.style.top = (startY - 60) + 'px';
+            document.body.appendChild(bang);
+
+            // Calculation
+            const angle = Math.atan2(e.clientY - startY, e.clientX - startX);
+            bullet.style.left = startX + 'px';
+            bullet.style.top = startY + 'px';
+
+            // Animation
+            bullet.animate([
+                { transform: `rotate(${angle}rad) translateX(0px)`, opacity: 1 },
+                { transform: `rotate(${angle}rad) translateX(100vw)`, opacity: 0 }
+            ], { duration: 800, fill: 'forwards' });
+
+            bang.animate([
+                { opacity: 1, transform: 'translateY(0)' },
+                { opacity: 0, transform: 'translateY(-50px)' }
+            ], { duration: 800 });
+
+            setTimeout(() => {
+                bullet.remove();
+                bang.remove();
+            }, 800);
+        });
+    </script>
+</body>
+</html>
