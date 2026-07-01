@@ -27,7 +27,7 @@ CSS3: Used for styling, layout, and smooth animations (Keyframes, Flexbox).
 
 JavaScript: Handles the core shooting logic, trigonometry (Math.atan2 for aiming), and DOM manipulation.
 
-🎨 Future Improvements (Roadmap)
+🎨 Future Improvements (Roadmap)....
 [ ] Sound Effects: Add realistic gunshot and explosion sounds.
 
 [ ] Scoreboard: Implement a counter to track your shooting accuracy and hits.
